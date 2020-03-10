@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
+import axios from "axios";
+
+const token = localStorage.getItem('token');
+if (token){
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
 
 ReactDOM.render((
         <BrowserRouter>
