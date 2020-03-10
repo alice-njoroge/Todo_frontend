@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import FormError from "../components/error";
+import SuccessBox from "../components/success";
 
 class Login extends Component {
     state = {
@@ -29,7 +30,6 @@ class Login extends Component {
                 });
                 return this.props.history.push('/users');
 
-
             }).catch(e => {
             this.setState({
                 error:e.response.data.message
@@ -39,13 +39,6 @@ class Login extends Component {
     };
 
     render() {
-        let successBox = '';
-        if (this.state.success){
-            successBox = <div className="alert alert-success" role="alert">
-                A simple success alert—check it out!
-            </div>
-        }
-
         return (
             <div className="login">
                 <div className="container">
@@ -56,7 +49,7 @@ class Login extends Component {
                                     Login
                                 </div>
                                 <div className="card-body">
-                                    {successBox}
+                                    <SuccessBox success={this.state.success}/>
                                     <FormError error={this.state.error} />
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="form-group">
