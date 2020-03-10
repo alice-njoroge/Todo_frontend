@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import FormError from "../components/error";
 
 class Login extends Component {
     state = {
@@ -7,7 +8,8 @@ class Login extends Component {
             email: null,
             password: null
         },
-        error: null
+        error: null,
+        success:null
     };
     handleChange = (e) => {
         let form = {...this.state.form};
@@ -21,15 +23,29 @@ class Login extends Component {
         this.setState({error: null});
         axios.post(`http://127.0.0.1:3031/users/login`, this.state.form)
             .then(res => {
-                let token = localStorage.setItem("token", res.data.token);
-                return this.props.history.push("/users");
+                localStorage.setItem("token", res.data.token);
+                this.setState({
+                    success:true
+                });
+                return this.props.history.push('/users');
+
+
             }).catch(e => {
-            console.log(e.response);
+            this.setState({
+                error:e.response.data.message
+            })
         });
 
     };
 
     render() {
+        let successBox = '';
+        if (this.state.success){
+            successBox = <div className="alert alert-success" role="alert">
+                A simple success alert—check it out!
+            </div>
+        }
+
         return (
             <div className="login">
                 <div className="container">
@@ -40,6 +56,8 @@ class Login extends Component {
                                     Login
                                 </div>
                                 <div className="card-body">
+                                    {successBox}
+                                    <FormError error={this.state.error} />
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="form-group">
                                             <label htmlFor="email">Email address</label>
