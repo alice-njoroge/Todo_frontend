@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import swal from 'sweetalert';
+import {Link} from "react-router-dom";
 
 
 class Users extends Component {
@@ -67,7 +68,7 @@ class Users extends Component {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
-                        <button type="button" className="btn btn-primary">Show</button>
+                        <Link className="btn btn-outline-primary" to={`/users/${user.id}`}>Users</Link>
                         <button type="button" onClick={() => {
                             this.deleteUser(user.id)
                         }} className="btn btn-danger ml-2">Delete

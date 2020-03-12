@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 class User extends Component {
     state = {
@@ -14,18 +15,18 @@ class User extends Component {
             fetching: true,
             error: null
         });
-        axios.get(`http://127.0.0.1:3031/users/${id}`).then(res => {
-            const user = res.data;
-            this.setState({
-                user: user,
-                fetching: false
-            });
-        }).catch(e => {
+        axios.get(`http://127.0.0.1:3031/users/${id}`)
+            .then(res => {
+                const user = res.data;
+                this.setState({
+                    user: user,
+                    fetching: false
+                });
+            }).catch(e => {
             this.setState({
                 error: e.response.data.message,
                 fetching: false
             });
-            console.log(e.response);
         });
 
     }
@@ -37,21 +38,31 @@ class User extends Component {
                 <div className="row">
                     <div className="col-md-8 offset-2">
                         <div className="card">
+                            <div className="card-header">
+                                {this.state.user ? (this.state.user.name): ''}
+                            </div>
                             <div className="card-body d-flex justify-content-center">
+
                                 {this.state.fetching ? (<div className="spinner-border text-primary" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </div>) : ''}
+
                                 {this.state.error ? (
                                     <div className="alert alert-danger" role="alert">
                                         {this.state.error}
                                     </div>
                                 ) : ''}
+
                                 {this.state.user ? (
                                     <div>
                                         <p><strong>Name:</strong> {this.state.user.name}</p>
                                         <p><strong>Email:</strong> {this.state.user.email}</p>
                                     </div>
                                 ) : ''}
+
+                            </div>
+                            <div className="card-footer">
+                                <Link className="btn btn-outline-primary float-right" to="/users">Back</Link>
                             </div>
                         </div>
 
