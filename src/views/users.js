@@ -67,7 +67,7 @@ class Users extends Component {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
-                        <button type="button" className="btn btn-primary">Roles</button>
+                        <button type="button" className="btn btn-primary">Show</button>
                         <button type="button" onClick={() => {
                             this.deleteUser(user.id)
                         }} className="btn btn-danger ml-2">Delete

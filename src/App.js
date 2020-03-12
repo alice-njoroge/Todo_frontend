@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Login from "./views/login";
 import Users from "./views/users";
 import Tasks from "./views/tasks";
+import User from "./views/show";
 
 class App extends Component {
     render() {
@@ -14,6 +15,7 @@ class App extends Component {
                 <Header/>
                 <Switch>
                     <Route exact path='/login' component={Login}/>
+                    <Route path='/users/:id' component={User}/>
                     <Route path='/users' component={Users}/>
                     <Route path='/tasks' component={Tasks}/>
                 </Switch>

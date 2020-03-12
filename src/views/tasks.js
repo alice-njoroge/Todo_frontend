@@ -28,7 +28,7 @@ class Tasks extends Component {
             return (<tr key={task.id}>
                 <th scope="row">{task.id}</th>
                 <td>{task.title}</td>
-                <td>{task.completed ? "Yes":"No" } </td>
+                <td>{ task.completed ? "Yes":"No" } </td>
                 <td>{task.user.name}</td>
                 <td>Action</td>
             </tr>);
@@ -40,7 +40,7 @@ class Tasks extends Component {
                         <div className="col-md-8 offset-2">
                             <div className="card">
                                 <div className="card-header ml-1 mr-1 mt-1">
-                                    User Tasks
+                                    User Tasks <button className="btn btn-success float-right"> Create New</button>
                                 </div>
                                 <div className="card-body">
                                     <table className="table">
