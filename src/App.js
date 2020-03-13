@@ -7,15 +7,19 @@ import Users from "./views/users";
 import Tasks from "./views/tasks";
 import User from "./views/show";
 import Register from "./views/register";
+import Home from "./views/Home";
+import Success from "./components/successRedux";
 
 class App extends Component {
     render() {
         return (
             <Router>
                 <Header/>
+                <Success />
                 <Switch>
-                    <Route exact path='/' component={Register}/>
-                    <Route exact path='/login' component={Login}/>
+                    <Route exact path='/' component={Home}/>
+                    <Route exact path='/register' component={Register}/>
+                    <Route  path='/login' component={Login}/>
                     <Route path='/users/:id' component={User}/>
                     <Route path='/users' component={Users}/>
                     <Route path='/tasks' component={Tasks}/>

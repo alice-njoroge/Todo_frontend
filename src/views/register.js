@@ -11,7 +11,8 @@ class Register extends Component {
             confirm_password:null
         },
         hidden: true,
-        error:null
+        error:null,
+
     };
 
     handleChange = (e) => {
@@ -35,6 +36,8 @@ class Register extends Component {
                 .then(res => {
                     console.log(res.data);
                     this.props.registerNew(res.data);
+                    this.props.sendSuccessMessage("User created successfully");
+                    this.props.history.push('/');
                 }).catch(e => {
                 console.log(e.response);
             });
@@ -124,6 +127,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         registerNew: (user) => {
             dispatch({type: 'REGISTER_NEW', user})
+        },
+        sendSuccessMessage:(message)=>{
+            dispatch ({type:'SUCCESS_MESSAGE', message})
         }
 
     }

@@ -6,7 +6,7 @@ import React from "react";
 function SuccessBox(props) {
     if (props.success){
         return(
-            <div className="alert alert-success" role="alert">
+            <div className="alert alert-success " role="alert">
                 A simple success alert—check it out!
             </div>
         )
