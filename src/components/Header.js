@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { NavLink} from "react-router-dom";
+import { connect } from "react-redux";
 
 class Header extends Component{
     render() {
@@ -24,10 +25,20 @@ class Header extends Component{
                             </li>
 
                         </ul>
+                        <ul className="navbar-nav cur-user ">
+                            <li className="nav-item">
+                                {this.props.user ? (this.props.user.name) : ''}
+                            </li>
+                        </ul>
                     </div>
                 </nav>
             </div>
         );
     }
 }
-export default Header;
+const mapStateToProps = (state)=>{
+    return  {
+        user :state.user
+    }
+};
+export default connect(mapStateToProps) (Header);

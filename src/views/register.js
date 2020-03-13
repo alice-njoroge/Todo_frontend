@@ -25,7 +25,7 @@ class Register extends Component {
                 console.log(res.data);
                 this.props.registerNew(res.data);
             }).catch(e=>{
-            console.log(e.response.data);
+            console.log(e.response);
         });
     };
 
