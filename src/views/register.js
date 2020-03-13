@@ -4,29 +4,36 @@ import axios from "axios";
 
 class Register extends Component {
     state = {
-        user:{
-            name:null,
-            email:null,
-            password:null
-        }
+        user: {
+            name: null,
+            email: null,
+            password: null
+        },
+        hidden: true
     };
 
     handleChange = (e) => {
         let user = this.state.user;
         user[e.target.id] = e.target.value;
-       this.setState({
-           user
-       });
+        this.setState({
+            user
+        });
     };
     handleSubmit = (e) => {
         e.preventDefault();
         axios.post(`http://127.0.0.1:3031/users`, this.state.user)
-            .then(res=>{
+            .then(res => {
                 console.log(res.data);
                 this.props.registerNew(res.data);
-            }).catch(e=>{
+            }).catch(e => {
             console.log(e.response);
         });
+    };
+    toggleShow = (e) => {
+        this.setState({
+            hidden:!this.state.hidden
+        });
+
     };
 
     render() {
@@ -54,9 +61,16 @@ class Register extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="password">Password</label>
-                                        <input type="password" className="form-control" onChange={this.handleChange}
-                                               id="password"/>
+                                        <div className="input-group">
+                                            <input type={this.state.hidden ? "password" : "text"} className="form-control" onChange={this.handleChange}
+                                                   id="password"/>
+                                            <div className="input-group-append" onClick={this.toggleShow}>
+                                                    <span className="input-group-text pointer"
+                                                          id="basic-addon2">{this.state.hidden? ("show"): ("hide")}</span>
+                                            </div>
+                                        </div>
                                     </div>
+
 
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </form>
