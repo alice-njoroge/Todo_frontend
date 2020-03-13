@@ -7,9 +7,11 @@ class Register extends Component {
         user: {
             name: null,
             email: null,
-            password: null
+            password: null,
+            confirm_password:null
         },
-        hidden: true
+        hidden: true,
+        error:null
     };
 
     handleChange = (e) => {
@@ -21,13 +23,23 @@ class Register extends Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://127.0.0.1:3031/users`, this.state.user)
-            .then(res => {
-                console.log(res.data);
-                this.props.registerNew(res.data);
-            }).catch(e => {
-            console.log(e.response);
-        });
+        if (this.state.user.password !== this.state.user.confirm_password){
+            this.setState({
+                error:true
+            });
+
+        }else {
+            let user = this.state.user;
+            delete user['confirm_password'];
+            axios.post(`http://127.0.0.1:3031/users`, user)
+                .then(res => {
+                    console.log(res.data);
+                    this.props.registerNew(res.data);
+                }).catch(e => {
+                console.log(e.response);
+            });
+        }
+
     };
     toggleShow = (e) => {
         this.setState({
@@ -46,6 +58,11 @@ class Register extends Component {
                                 Register Here
                             </div>
                             <div className="card-body">
+                                {this.state.error?(
+                                    <div className="alert alert-danger" role="alert">
+                                        Passwords did not match!
+                                    </div>
+                                ):''}
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name</label>
@@ -64,6 +81,17 @@ class Register extends Component {
                                         <div className="input-group">
                                             <input type={this.state.hidden ? "password" : "text"} className="form-control" onChange={this.handleChange}
                                                    id="password"/>
+                                            <div className="input-group-append" onClick={this.toggleShow}>
+                                                    <span className="input-group-text pointer"
+                                                          id="basic-addon2">{this.state.hidden? ("show"): ("hide")}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="confirm_password">Password</label>
+                                        <div className="input-group">
+                                            <input type={this.state.hidden ? "password" : "text"} className="form-control" onChange={this.handleChange}
+                                                   id="confirm_password"/>
                                             <div className="input-group-append" onClick={this.toggleShow}>
                                                     <span className="input-group-text pointer"
                                                           id="basic-addon2">{this.state.hidden? ("show"): ("hide")}</span>
