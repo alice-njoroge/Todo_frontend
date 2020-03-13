@@ -13,7 +13,7 @@ class Login extends Component {
         success:null
     };
     handleChange = (e) => {
-        let form = {...this.state.form};
+        let form = this.state.form;
         form[e.target.id] = e.target.value;
         this.setState({
             form: form
