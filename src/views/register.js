@@ -1,16 +1,32 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
+import axios from "axios";
 
 class Register extends Component {
+    state = {
+        user:{
+            name:null,
+            email:null,
+            password:null
+        }
+    };
 
     handleChange = (e) => {
-        let user = this.props.user;
+        let user = this.state.user;
         user[e.target.id] = e.target.value;
-       this.props.registerNew(this.props.user);
+       this.setState({
+           user
+       });
     };
-    handleSubmit = (e)=>{
+    handleSubmit = (e) => {
         e.preventDefault();
-
+        axios.post(`http://127.0.0.1:3031/users`, this.state.user)
+            .then(res=>{
+                console.log(res.data);
+                this.props.registerNew(res.data);
+            }).catch(e=>{
+            console.log(e.response.data);
+        });
     };
 
     render() {
@@ -55,6 +71,7 @@ class Register extends Component {
     }
 
 }
+
 const mapStateToProps = state => {
     return {
         user: state.user
@@ -63,7 +80,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        registerNew : (user)=>{ dispatch({type:'REGISTER_NEW', user})}
+        registerNew: (user) => {
+            dispatch({type: 'REGISTER_NEW', user})
+        }
 
     }
 };
